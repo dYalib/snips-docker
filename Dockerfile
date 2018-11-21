@@ -1,6 +1,6 @@
-#version: 20181121_alpha01
+#version: 20181121_alpha02
 
-FROM debian:jessie-slim
+FROM debian:stretch-slim
 
 	
 RUN set -x && \
@@ -22,14 +22,16 @@ RUN set -x && \
 	apt-get update 
 
 RUN set -x && \
-	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo
+	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo
 
 #Is this really required? 
 RUN set -x && \	
 	usermod -aG snips-skills-admin root
 
+COPY start-snips.sh start-snips.sh
 
-#TODO: Find a better place then /
-COPY start-snips.sh /
+#!!ONLY FOR TEST PURPOSES!!
+EXPOSE 1833/tcp
 
-CMD ["/start_snips.sh"]
+
+CMD ["bash","/start-snips.sh"]
