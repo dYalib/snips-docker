@@ -1,6 +1,20 @@
 #!/bin/bash
 set -e
 
+#deploy apps (skills). See: https://snips.gitbook.io/documentation/console/deploying-your-skills
+snips-template render
+
+cd /var/lib/snips/skills
+find . -maxdepth 1 -type d -print0 | while IFS= read -r -d '' dir; do
+	cd "$dir" 
+	if [ -f setup.sh ]; then
+		./setup.sh
+	fi
+	cd /var/lib/snips/skills
+done
+
+cd /
+
 #start own mqtt service. !!ONLY FOR TEST PURPOSES!!
 mosquitto -d
 #mosquitto_pid=$!

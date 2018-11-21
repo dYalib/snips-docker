@@ -1,4 +1,4 @@
-#version: 20181121_alpha03
+#version: 20181121_alpha04
 
 FROM debian:stretch-slim
 
