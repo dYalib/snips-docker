@@ -3,7 +3,7 @@ set -e
 
 #start own mqtt service. !!ONLY FOR TEST PURPOSES!!
 mosquitto -d
-mosquitto_pid=$!
+#mosquitto_pid=$!
 
 #start Snips analytics
 snips-analytics 2> /var/log/snips-analytics.log  &
@@ -30,9 +30,13 @@ snips_nlu_pid=$!
 snips-skill-server 2> /var/log/snips-skill-server &
 snips_skill_server_pid=$!
 
+#start Snips TTS Service
+snips-tts 2> /var/log/snips-tts.log &
+snips_tts_pid=$!
+
 #start the snips audio server without playback and microphone
-snips-audio-server --disable-playback --no-mike --hijack localhost:64321 2> snips-audio-server.log &
+snips-audio-server --disable-playback --no-mike --hijack localhost:64321 2> /var/log/snips-audio-server.log &
 snips_audio_server_pid=$!
 
-wait "$mosquitto_pid" "$snips_analytics_pid" "$snips_asr_pid" "$snips_dialogue_pid" "$snips_hotword_pid" "$snips_nlu_pid" "$snips_skill_server_pid" "$snips_audio_server_pid"
+wait "$snips_analytics_pid" "$snips_asr_pid" "$snips_dialogue_pid" "$snips_hotword_pid" "$snips_nlu_pid" "$snips_skill_server_pid" "$snips_audio_server_pid"
 

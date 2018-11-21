@@ -1,10 +1,12 @@
-#version: 20181121_alpha02
+#version: 20181121_alpha03
 
 FROM debian:stretch-slim
 
 	
 RUN set -x && \
-	sed -i "s#deb http://http.us.debian.org/debian jessie main contrib#deb http://http.us.debian.org/debian jessie main contrib non-free#g" /etc/apt/sources.list
+	sed -i "s#deb http://deb.debian.org/debian stretch main#deb http://deb.debian.org/debian stretch main non-free#g" /etc/apt/sources.list && \
+	sed -i "s#deb http://security.debian.org/debian-security stretch/updates main#deb http://security.debian.org/debian-security stretch/updates main non-free#g" /etc/apt/sources.list && \
+	sed -i "s#deb http://deb.debian.org/debian stretch-updates main#deb http://deb.debian.org/debian stretch-updates main non-free#g" /etc/apt/sources.list
 
 RUN set -x && \
 	apt-get update && apt-get dist-upgrade -y
@@ -22,7 +24,10 @@ RUN set -x && \
 	apt-get update 
 
 RUN set -x && \
-	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo
+	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo snips-template python-pip
+
+RUN set -x && \
+	pip install virtualenv
 
 #Is this really required? 
 RUN set -x && \	
