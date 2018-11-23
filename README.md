@@ -4,7 +4,6 @@ Snips platform running in docker.
 Official Website about snips: https://snips.ai/
 
 
-
 ### Build ###
 
 - clone this repo with `git clone`

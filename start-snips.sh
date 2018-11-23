@@ -1,14 +1,29 @@
 #!/bin/bash
 set -e
 
+
+
+
+
+
 #deploy apps (skills). See: https://snips.gitbook.io/documentation/console/deploying-your-skills
 snips-template render
 
+
+
 cd /var/lib/snips/skills
+
+for url in $(awk '$1=="url:" {print $2}' /usr/share/snips/assistant/Snipsfile.yaml); do
+	git clone $url
+done
+
+cd /var/lib/snips/skills
+
 find . -maxdepth 1 -type d -print0 | while IFS= read -r -d '' dir; do
 	cd "$dir" 
 	if [ -f setup.sh ]; then
-		./setup.sh
+		echo "Run setup.sh in "$dir
+		bash ./setup.sh
 	fi
 	cd /var/lib/snips/skills
 done

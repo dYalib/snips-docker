@@ -1,4 +1,4 @@
-#version: 20181121_alpha04
+#version: 20181123_alpha05
 
 FROM debian:stretch-slim
 
@@ -24,7 +24,7 @@ RUN set -x && \
 	apt-get update 
 
 RUN set -x && \
-	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo snips-template python-pip
+	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo snips-template python-pip git
 
 RUN set -x && \
 	pip install virtualenv
