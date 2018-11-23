@@ -1,7 +1,10 @@
 # WIP snips-docker
-Snips platform running in docker.
+Snips platform running in docker! 
 
 Official Website about snips: https://snips.ai/
+
+The motivation for build this container is to run "Snips Voice Assistant" with satellite configuration. This container provides only a server instance without any direct sound input / output.  That mean a "sattelite device" is absolutely necessary! <br>
+Read more about this: https://snips.gitbook.io/documentation/installing-snips/multi-device-setup-satellites 
 
 
 ### Build ###
@@ -55,14 +58,31 @@ docker run --name <container name> \
 # For example
 docker run
 	--name snips-server \
+		-v /home/user/snips/log/:/var/log \
+		-v /home/user/snips/:/usr/share/snips \
+		-p 1883:1883 \
+		snips-docker
+		
+		
+# On hosts with enabled SELinux (e.g. Fedora), you have to add a ":Z" at the end of all paths.
+# For example
+docker run
+	--name snips-server \
 		-v /home/user/snips/log/:/var/log:Z \
 		-v /home/user/snips/:/usr/share/snips:Z \
 		-p 1883:1883 \
-		snips-docker
+		snips-docker		
 
 ```
 
 
 ## Limitations ##
 
-Since it's not a good idea to run a ssh daemon in a docker container, it's not possible to use `SAM` for assistant deploying.
+- Since it's not a good idea to run a ssh daemon in a docker container, it's not possible to use `SAM` for assistant deploying.
+- Without SAM, you have to manually edit the Skills configurations
+
+## TODO ##
+
+- [ ] write the Dockerfile for arm32v6 architecture (RPI)
+- [ ] reduce the image size
+- [ ] start only the services, thats really required. Thats dependig on configuration method A or B. Or if you use a external MQTT Server
