@@ -18,7 +18,7 @@ Read more about this: https://snips.gitbook.io/documentation/installing-snips/mu
 docker build -f Dockerfile.amd64 -t <image-name> .
 
 # For example
-docker build -f Dockerfile.amd64 -t snips-docker .
+docker build -f Dockerfile.amd64 -t snips-docker-image .
 ```
 
 - To build for arm32v6 (Raspberry PI)
