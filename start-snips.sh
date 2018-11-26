@@ -1,36 +1,36 @@
 #!/bin/bash
 set -e
-
-
-
-
-
-
 #deploy apps (skills). See: https://snips.gitbook.io/documentation/console/deploying-your-skills
 snips-template render
 
-
-
+#goto skill directory
 cd /var/lib/snips/skills
 
+#download required skills from git
 for url in $(awk '$1=="url:" {print $2}' /usr/share/snips/assistant/Snipsfile.yaml); do
 	git clone $url
 done
 
+#be shure we are still in the skill directory
 cd /var/lib/snips/skills
 
+#run setup.sh for each skill.
 find . -maxdepth 1 -type d -print0 | while IFS= read -r -d '' dir; do
 	cd "$dir" 
 	if [ -f setup.sh ]; then
 		echo "Run setup.sh in "$dir
+		#run the scrips always with bash
 		bash ./setup.sh
 	fi
 	cd /var/lib/snips/skills
 done
 
+#skill deployment is done
+
+#go back to root directory
 cd /
 
-#start own mqtt service. !!ONLY FOR TEST PURPOSES!!
+#start own mqtt service.
 mosquitto -d
 #mosquitto_pid=$!
 
