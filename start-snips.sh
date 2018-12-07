@@ -1,17 +1,13 @@
 #!/bin/bash
 set -e
 
-
-
-
-
-
 #deploy apps (skills). See: https://snips.gitbook.io/documentation/console/deploying-your-skills
 snips-template render
 
 
-
 cd /var/lib/snips/skills
+
+rm -rf *
 
 for url in $(awk '$1=="url:" {print $2}' /usr/share/snips/assistant/Snipsfile.yaml); do
 	git clone $url
