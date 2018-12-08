@@ -59,6 +59,7 @@ docker run --name <container name> \
 docker run \
 		--name snips-server \
 		-v /home/user/snips/log/:/var/log \
+		-v /home/user/snips/snips.toml:/etc/snips.toml
 		-v /home/user/snips/:/usr/share/snips \
 		-p 1883:1883 \
 		snips-docker-image
@@ -69,6 +70,7 @@ docker run \
 docker run \
 		--name snips-server \
 		-v /home/david/snips/log/:/var/log:Z \
+		-v /home/user/snips/snips.toml:/etc/snips.toml:Z
 		-v /home/david/snips/:/usr/share/snips:Z \
 		-p 1883:1883 \
 		snips-docker-image		
