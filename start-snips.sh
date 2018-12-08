@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+#verify that environment variables have been passed to this container. set the default value if not.
+ENABLE_MQTT=${ENABLE_MQTT:-yes}
+ENABLE_HOTWORD_SERVICE=${ENABLE_HOTWORD_SERVICE:-yes}
+
+
 #deploy apps (skills). See: https://snips.gitbook.io/documentation/console/deploying-your-skills
 snips-template render
 
@@ -34,11 +39,13 @@ done
 #go back to root directory
 cd /
 
-#start own mqtt service.
-mosquitto -d
-#mosquitto_pid=$!
 
-#start Snips analytics
+#start own mqtt service.
+if [ $ENABLE_MQTT == yes ]; then
+	mosquitto -d
+fi
+
+#start Snips analytics service
 snips-analytics 2> /var/log/snips-analytics.log  &
 snips_analytics_pid=$!
 
@@ -50,20 +57,22 @@ snips_asr_pid=$!
 snips-dialogue 2> /var/log/snips-dialogue.log  &
 snips_dialogue_pid=$!
 
-#start Snips hotword servie
-#is this really required??
-snips-hotword 2> /var/log/snips-hotword.log & 
-snips_hotword_pid=$!
+#start Snips hotword service
 
-#start Snips Natural Language Understanding
+if [ $ENABLE_HOTWORD_SERVICE == yes ]; then
+	snips-hotword 2> /var/log/snips-hotword.log & 
+	snips_hotword_pid=$!
+fi
+
+#start Snips Natural Language Understanding service
 snips-nlu 2> /var/log/snips-nlu.log &
 snips_nlu_pid=$!
 
-#start Snips Skill Server
+#start Snips Skill service
 snips-skill-server 2> /var/log/snips-skill-server &
 snips_skill_server_pid=$!
 
-#start Snips TTS Service
+#start Snips TTS service
 snips-tts 2> /var/log/snips-tts.log &
 snips_tts_pid=$!
 
