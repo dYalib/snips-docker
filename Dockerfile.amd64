@@ -1,6 +1,12 @@
-#version: 20181126_beta01
+#version: 20181208_rc1
 
 FROM debian:stretch-slim
+
+#Change the timezone to your current timezone!!
+ENV TZ=Europe/Amsterdam
+
+RUN set -x && \ 
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 	
 RUN set -x && \
 	sed -i "s#deb http://deb.debian.org/debian stretch main#deb http://deb.debian.org/debian stretch main non-free#g" /etc/apt/sources.list && \

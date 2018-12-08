@@ -1,4 +1,10 @@
-#version: 20181208_beta01
+#version: 20181208_rc1
+
+#Change the timezone to your current timezone!!
+ENV TZ=Europe/Amsterdam
+
+RUN set -x && \ 
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 FROM resin/rpi-raspbian:stretch
 	
