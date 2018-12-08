@@ -46,16 +46,20 @@ e.g. `unzip assistant_proj_Xr3k725M86V1 -d /home/user/snips`
  - `<path to snips.toml>` Path to your snips.toml file
  - `<path to snips assistant>` Path to your assistant
  - `<image-name>` Name of the docker image that you have create with docker build
+ - `ENABLE_MQTT=<yes/no>` `yes (or not set)` = start a mqtt serve inside the conatiner. `no` = you have to set up a separate mqtt server
+ - `ENABLE_HOTWORD_SERVICE=<yes/no>` `yes (or not set)` = start the hotword recognition service (required for satellite configuration methode A). `no` = no hotword recognition (make sense for satellite configuration methode B)
 
 ```
 docker run --name <container name> \
 	-v <log path>/:/var/log:Z \
 	-v <path to snips.toml>:/etc/snips.toml \
 	-v <path to snips assistant>:/usr/share/snips \
+	-e ENABLE_MQTT=<yes/no> \
+	-e ENABLE_HOTWORD_SERVICE=<yes/no> \
 	-p 1883:1883 \
 	  <image-name>
 
-# For example
+# For example, run with all services
 docker run \
 		--name snips-server \
 		-v /home/user/snips/log/:/var/log \
@@ -63,6 +67,18 @@ docker run \
 		-v /home/user/snips/:/usr/share/snips \
 		-p 1883:1883 \
 		snips-docker-image
+		
+
+# For example, run without mqtt and snips-hotword
+docker run \
+		--name snips-server \
+		-v /home/user/snips/log/:/var/log \
+		-v /home/user/snips/snips.toml:/etc/snips.toml
+		-v /home/user/snips/:/usr/share/snips \
+		-e ENABLE_MQTT=no \
+		-e ENABLE_HOTWORD_SERVICE=no \
+		-p 1883:1883 \
+		snips-docker-image		
 		
 		
 # On hosts with enabled SELinux (e.g. Fedora), you have to add a ":Z" at the end of all paths.
@@ -101,4 +117,4 @@ Solution: At the moment, i have only a workaround. -> Start the build process ag
 
 - [X] write the Dockerfile for arm32v7 architecture (RPI)
 - [X] reduce the image size
-- [ ] start only the services, thats really required. Thats dependig on configuration method A or B. Or if you use a external MQTT Server
+- [X] start only the services, thats really required. Thats dependig on configuration method A or B. Or if you use a external MQTT Server
