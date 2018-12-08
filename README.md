@@ -21,14 +21,14 @@ docker build -f Dockerfile.amd64 -t <image-name> .
 docker build -f Dockerfile.amd64 -t snips-docker-image .
 ```
 
-- To build for arm32v6 (Raspberry PI)
+- To build for arm32v7 (Raspberry PI)
 
 ```
 # Replace <image-name> with your prefered image name
-docker build -f Dockerfile.arm32v6 -t <image-name> .
+docker build -f Dockerfile.arm32v7 -t <image-name> .
 
 # For example
-docker build -f Dockerfile.arm32v6 -t snips-docker-image .
+docker build -f Dockerfile.arm32v7 -t snips-docker-image .
 ```
 
 ### Usage ###
@@ -83,8 +83,22 @@ docker run \
 - Since it's not a good idea to run a ssh daemon in a docker container, it's not possible to use `SAM` for assistant deploying.
 - Without SAM, you have to manually edit the Skills configurations
 
+## Known Problems ##
+
+Problem: Sometimes the key server will not respond. You got the following message at the build process
+```
++ apt-key adv --keyserver pgp.mit.edu --recv-keys D4F50CDCA10A2849
+Executing: gpg --ignore-time-conflict --no-options --no-default-keyring --homedir /tmp/tmp.l4IOylh0iu --no-auto-check-trustdb --trust-model always --keyring /etc/apt/trusted.gpg --primary-keyring /etc/apt/trusted.gpg --keyserver pgp.mit.edu --recv-keys D4F50CDCA10A2849
+gpg: requesting key A10A2849 from hkp server pgp.mit.edu
+gpgkeys: key D4F50CDCA10A2849 can't be retrieved
+gpg: no valid OpenPGP data found.
+gpg: Total number processed: 0
+```
+Solution: At the moment, i have only a workaround. -> Start the build process again and again and again... After some try it works. Yes, thats a really bad workaround...
+
+
 ## TODO ##
 
-- [ ] write the Dockerfile for arm32v6 architecture (RPI)
+- [X] write the Dockerfile for arm32v7 architecture (RPI)
 - [X] reduce the image size
 - [ ] start only the services, thats really required. Thats dependig on configuration method A or B. Or if you use a external MQTT Server
