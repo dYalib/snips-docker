@@ -1,7 +1,6 @@
-#version: 20181123_alpha05
+#version: 20181126_beta01
 
 FROM debian:stretch-slim
-
 	
 RUN set -x && \
 	sed -i "s#deb http://deb.debian.org/debian stretch main#deb http://deb.debian.org/debian stretch main non-free#g" /etc/apt/sources.list && \
@@ -24,7 +23,7 @@ RUN set -x && \
 	apt-get update 
 
 RUN set -x && \
-	 apt-get install -y alsa-utils snips-platform-voice snips-skill-server snips-watch curl unzip sudo snips-platform-demo snips-template python-pip git
+	apt-get install -y alsa-utils snips-platform-voice snips-skill-server curl unzip snips-template python-pip git
 
 RUN set -x && \
 	pip install virtualenv
@@ -32,10 +31,9 @@ RUN set -x && \
 #Is this really required? 
 RUN set -x && \	
 	usermod -aG snips-skills-admin root
-
+	
 COPY start-snips.sh start-snips.sh
 
-#!!ONLY FOR TEST PURPOSES!!
 EXPOSE 1833/tcp
 
 
