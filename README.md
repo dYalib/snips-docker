@@ -11,6 +11,7 @@ Read more about this: https://snips.gitbook.io/documentation/installing-snips/mu
 
 - clone this repo with `git clone`
 - `cd` into the cloned folder
+- change the time zone in the Dockerfile to your current time zone.
 - To build for amd64
 
 ```
