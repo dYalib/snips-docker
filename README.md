@@ -33,22 +33,22 @@ docker build -f Dockerfile.arm32v7 -t snips-docker-image .
 ```
 
 ### Usage ###
-- Keep in mind, access rights are system depend! Make sure that you and the docker daemon are granted to access (RW) the folder with the persistent snips data. In the following, I assume that the full access rights exist
+- Keep in mind, access rights are system depended! Make sure that you and the docker daemon are granted to access (RW) the folder with the persistent snips data. In the following, I assume that the full access rights exist.
 - On Docker Host, create a folder where the snips persistent data (assistant, config, logs) should be. <br>
 e.g. `mkdir /home/user/snips`
 - Create your assistant at https://console.snips.ai
 - Download your assistant
 - Unzip your new assistant in the folder that you have been created <br>
 e.g. `unzip assistant_proj_Xr3k725M86V1 -d /home/user/snips`
-- copy your snips.toml configuration file (or the default one from cloned git repo) to the folder, that you habe been created.
+- copy your snips.toml configuration file (or the default one from cloned git repo) to the folder, that you have been created.
 - start the container
- - `<container name>` Choose a name for the container
- - `<log path>` <b>optionally</b>, path on docker host where the snips logs will be stored
- - `<path to snips.toml>` Path to your snips.toml file
- - `<path to snips assistant>` Path to your assistant
- - `<image-name>` Name of the docker image that you have create with docker build
- - `ENABLE_MQTT=<yes/no>` `yes (or not set)` = start a mqtt serve inside the conatiner. `no` = you have to set up a separate mqtt server
- - `ENABLE_HOTWORD_SERVICE=<yes/no>` `yes (or not set)` = start the hotword recognition service (required for satellite configuration methode A). `no` = no hotword recognition (make sense for satellite configuration methode B)
+  - `<container name>` Choose a name for the container
+  - `<log path>` <b>optionally</b>, path on docker host where the snips logs will be stored
+  - `<path to snips.toml>` Path to your snips.toml file
+  - `<path to snips assistant>` Path to your assistant
+  - `<image-name>` Name of the docker image that you have create with docker build
+  - `ENABLE_MQTT=<yes/no>` `yes (or not set)` = start a mqtt serve inside the conatiner. `no` = you have to set up a separate mqtt server
+  - `ENABLE_HOTWORD_SERVICE=<yes/no>` `yes (or not set)` = start the hotword recognition service (required for satellite configuration methode A). `no` = no hotword recognition (make sense for satellite configuration methode B)
 
 ```
 docker run --name <container name> \
