@@ -1,6 +1,6 @@
 #version: 20181208_rc1
 
-FROM resin/rpi-raspbian:stretch
+FROM balenalib/rpi-raspbian:stretch
 
 #Change the timezone to your current timezone!!
 ENV TZ=Europe/Amsterdam
