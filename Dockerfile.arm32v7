@@ -1,13 +1,12 @@
 #version: 20181208_rc1
 
+FROM resin/rpi-raspbian:stretch
+
 #Change the timezone to your current timezone!!
 ENV TZ=Europe/Amsterdam
 
 RUN set -x && \ 
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-FROM resin/rpi-raspbian:stretch
-	
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone	
 RUN set -x && \
 	apt-get update && apt-get dist-upgrade -y
  
