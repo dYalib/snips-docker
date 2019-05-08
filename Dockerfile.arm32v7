@@ -1,13 +1,12 @@
 #version: 20181208_rc1
 
+FROM balenalib/rpi-raspbian:stretch
+
 #Change the timezone to your current timezone!!
 ENV TZ=Europe/Amsterdam
 
 RUN set -x && \ 
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-FROM resin/rpi-raspbian:stretch
-	
+	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone	
 RUN set -x && \
 	apt-get update && apt-get dist-upgrade -y
  
@@ -18,7 +17,7 @@ RUN set -x && \
 	bash -c  'echo "deb https://raspbian.snips.ai/stretch stable main" > /etc/apt/sources.list.d/snips.list'
 
 RUN set -x && \
-	apt-key adv --keyserver pgp.mit.edu --recv-keys D4F50CDCA10A2849 
+	apt-key adv --keyserver  keyserver.ubuntu.com --recv-keys D4F50CDCA10A2849 
 	
 RUN set -x && \
 	apt-get update 
