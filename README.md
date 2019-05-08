@@ -3,7 +3,7 @@ Snips platform running in docker!
 
 Official Website about snips: https://snips.ai/
 
-The motivation for build this container is to run "Snips Voice Assistant" with satellite configuration. This container provides only a server instance without any direct sound input / output.  That mean a "sattelite device" is absolutely necessary! <br>
+The motivation for build this container is to run "Snips Voice Assistant" with satellite configuration. This container provides only a server instance without any direct sound input / output.  That means a "sattelite device" is absolutely necessary! <br>
 Read more about this: https://snips.gitbook.io/documentation/installing-snips/multi-device-setup-satellites 
 
 
@@ -101,6 +101,8 @@ docker run \
 - Without SAM, you have to manually edit the Skills configurations
 
 ## Known Problems ##
+
+2019-05-08 Thanks @dchansel the problem below is fixed now!
 
 Problem: Sometimes the key server will not respond. You got the following message at the build process
 ```
